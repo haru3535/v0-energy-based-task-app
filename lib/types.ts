@@ -38,3 +38,13 @@ export interface AppSettings {
   healthSyncEnabled: boolean
   manualHealthInput: boolean
 }
+
+export interface WeatherData {
+  temperature: number // Celsius
+  pressure: number // hPa
+  humidity: number // %
+  weatherCode: number // WMO weather code
+  lastUpdated: Date
+}
+
+export type PressureImpact = "good" | "neutral" | "caution" | "warning"

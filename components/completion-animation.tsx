@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion"
 import { useEffect } from "react"
+import { Check } from "lucide-react"
 
 interface CompletionAnimationProps {
   show: boolean
@@ -11,7 +12,7 @@ interface CompletionAnimationProps {
 export function CompletionAnimation({ show, onComplete }: CompletionAnimationProps) {
   useEffect(() => {
     if (show) {
-      const timer = setTimeout(onComplete, 2000)
+      const timer = setTimeout(onComplete, 600)
       return () => clearTimeout(timer)
     }
   }, [show, onComplete])
@@ -23,35 +24,23 @@ export function CompletionAnimation({ show, onComplete }: CompletionAnimationPro
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm"
+          transition={{ duration: 0.15 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-background/60 backdrop-blur-sm"
         >
-          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="text-center">
+          <motion.div
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="w-20 h-20 rounded-full bg-pastel-pink flex items-center justify-center"
+          >
             <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 10, -10, 0],
-              }}
-              transition={{ duration: 0.5 }}
-              className="text-8xl mb-4"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.1, type: "spring", stiffness: 500, damping: 20 }}
             >
-              🎉
+              <Check className="w-10 h-10 text-white" strokeWidth={3} />
             </motion.div>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-2xl font-bold text-neon-green"
-            >
-              よくできました！
-            </motion.p>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-muted-foreground mt-2"
-            >
-              その調子！
-            </motion.p>
           </motion.div>
         </motion.div>
       )}

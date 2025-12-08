@@ -15,6 +15,7 @@ import { SettingsView } from "@/components/settings-view"
 import { TaskDetailSheet } from "@/components/task-detail-sheet"
 import { CompilerSheet } from "@/components/compiler-sheet"
 import { HealthSyncSheet } from "@/components/health-sync-sheet"
+import { WeatherDisplay } from "@/components/weather-display"
 
 // Sample data
 const initialTasks: Task[] = [
@@ -101,6 +102,7 @@ export default function SauciApp() {
   const [showCompiler, setShowCompiler] = useState(false)
   const [showHealthSync, setShowHealthSync] = useState(false)
   const [lastHealthSync, setLastHealthSync] = useState<HealthData | null>(null)
+  const [currentPressure, setCurrentPressure] = useState<number | null>(null)
 
   const ignitionTask = findIgnitionTask(tasks)
 
@@ -204,13 +206,11 @@ export default function SauciApp() {
         <div className="px-4 py-4 pb-28 space-y-5">
           {activeTab === "home" && (
             <>
+              {/* Weather Display */}
+              <WeatherDisplay onPressureChange={setCurrentPressure} />
+
               {/* Energy Display */}
-              <EnergyDisplay
-                level={energyLevel}
-                onTap={() => setShowEnergySelector(true)}
-                lastHealthSync={lastHealthSync}
-                onHealthSyncTap={() => setShowHealthSync(true)}
-              />
+              <EnergyDisplay level={energyLevel} onTap={() => setShowEnergySelector(true)} />
 
               {/* Ignition Task */}
               {ignitionTask && <IgnitionTaskCard task={ignitionTask} onComplete={handleCompleteTask} />}
